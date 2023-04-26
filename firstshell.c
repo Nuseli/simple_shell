@@ -13,7 +13,6 @@ int main(void)
 	char command[MAX_COMMAND_LENGTH];
 
 	while (1)
-
 	{
 	printf("$ ");
 	fflush(stdout);
@@ -28,6 +27,7 @@ int main(void)
 	/* Fork process */
 
 	pid_t pid = fork();
+
 	if (pid == -1)
 	{
 		perror("fork failed");
@@ -40,19 +40,20 @@ int main(void)
 		if (execlp(command, command, NULL) == -1)
 		{
 		/* If execlp returns -1, the command was not found */
-			fprintf(stderr, "Command not found: %s\n", command);
-			exit(EXIT_FAILURE);
+		fprintf(stderr, "Command not found: %s\n", command);
+		exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		/* Parent process */
 		/* Wait for child process to complete */
-		int status;
+	int status;
+
 		if (wait(&status) == -1)
 		{
-			perror("wait failed");
-			exit(EXIT_FAILURE);
+		perror("wait failed");
+		exit(EXIT_FAILURE);
 		}
 	}
 	}
